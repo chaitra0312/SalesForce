@@ -1,0 +1,38 @@
+WHERE clause query
+
+SELECT Product_Name__c, Price__c
+FROM Product__c
+WHERE Price__c > 500
+Output:
+No rows returned
+
+ORDER BY + LIMIT
+
+SELECT Product_Name__c, Price__c
+FROM Product__c
+ORDER BY Price__c DESC
+LIMIT 5
+Output:
+No rows returned
+
+Relationship query
+
+SELECT Product_Name__c, Category__r.Name
+FROM Product__c
+Output:
+No rows returned
+
+Aggregate query with COUNT() or GROUP BY
+
+SELECT COUNT()
+FROM Product__c
+Output:
+0
+
+Comparison operator (>=) on a date or number field
+
+SELECT Product_Name__c, Stock_Quantity__c
+FROM Product__c
+WHERE Stock_Quantity__c >= 10
+Output:
+No rows returned
