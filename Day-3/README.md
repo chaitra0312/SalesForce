@@ -139,9 +139,6 @@ Salesforce-Flow-Automation
 │
 ├── Screenshots
 │      Flow Canvas.png
-│      Assignment Element.png
-│      Update Records.png
-│      Send Email Action.png
 │      Successful Email.png
 │      Successful Execution.png
 │
