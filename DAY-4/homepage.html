@@ -1,0 +1,29 @@
+<template>
+
+    <lightning-card title="🛒 E-Commerce Store">
+
+        <div class="slds-p-around_medium">
+
+            <h1>Welcome {customerName}</h1>
+
+            <p><strong>Date :</strong> {todayDate}</p>
+
+            <p>Total Products : {totalProducts}</p>
+
+            <p>Total Categories : {totalCategories}</p>
+
+            <p>Cart Items : {cartItems}</p>
+
+            <p>Status : {status}</p>
+
+            <lightning-button
+                label="Shop Now"
+                variant="brand"
+                onclick={handleShopNow}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+
+</template>
