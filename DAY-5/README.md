@@ -1,19 +1,18 @@
-# Day 5 - Apex Service Layer
+# Day 5 - Apex Order Service
 
 ## Objective
 
-Learn Apex Classes, Methods, SOQL and DML by implementing an Order Service.
+Learn how to implement business logic using Apex classes.
 
 ## Concepts Covered
 
-- Apex Classes
+- Apex Class
 - Methods
-- Access Modifiers
+- OOPS
 - SOQL
 - DML
-- Business Logic
-- OOPS
 - Encapsulation
+- Service Layer
 
 ## Methods Implemented
 
@@ -25,6 +24,22 @@ Learn Apex Classes, Methods, SOQL and DML by implementing an Order Service.
 - createOrderItem()
 - createShipment()
 
-## Learning Outcome
+## Learning Outcomes
 
-Understood how business logic can be separated into reusable methods using Apex classes.
+- Designed an Order Service using OOPS principles.
+- Used SOQL to retrieve Product records.
+- Used DML to create Order, Order Item and Shipment records.
+- Learned to organize business logic into reusable helper methods.
+
+## Challenges
+
+- Validation Rule required Order Date.
+- Formula fields cannot be updated from Apex.
+- Debugged lookup relationship issues while creating Shipment.
+
+## Technologies
+
+- Salesforce
+- Apex
+- SOQL
+- DML
