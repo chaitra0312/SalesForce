@@ -1,0 +1,24 @@
+public class UnpaidOrderCancelBatch implements Database.Batchable<SObject> {
+
+    public Database.QueryLocator start(Database.BatchableContext context) {
+        DateTime cutoff = DateTime.now().addHours(-24);
+        return Database.getQueryLocator([
+            SELECT Id, Status__c, Payment_Status__c
+            FROM Order__c
+            WHERE Payment_Status__c = 'Pending'
+            AND CreatedDate <= :cutoff
+            AND Status__c != 'Cancelled'
+        ]);
+    }
+
+    public void execute(Database.BatchableContext context, List<Order__c> scope) {
+        for (Order__c ord : scope) {
+            ord.Status__c = 'Cancelled';
+        }
+        update scope;
+    }
+
+    public void finish(Database.BatchableContext context) {
+        System.debug('Unpaid order cleanup completed.');
+    }
+}
