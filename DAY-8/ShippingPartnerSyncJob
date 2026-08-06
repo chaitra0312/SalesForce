@@ -1,0 +1,28 @@
+public class ShippingPartnerSyncJob implements Queueable {
+    private Id orderId;
+
+    public ShippingPartnerSyncJob(Id orderId) {
+        this.orderId = orderId;
+    }
+
+    public void execute(QueueableContext context) {
+        Order__c ord = [SELECT Id, Name FROM Order__c WHERE Id = :orderId LIMIT 1];
+
+        Boolean syncSuccess = true; 
+
+        if (syncSuccess) {
+            insert new Shipment__c(
+                Order__c = ord.Id,
+                Shipment_Status__c = 'Shipped',
+                Courier_Partner__c = 'BlueDart',
+                Shipment_Date__c = Date.today()
+            );
+
+            if (!Test.isRunningTest()) {
+                System.enqueueJob(new OrderNotificationJob(orderId));
+            }
+        } else {
+            System.debug('Sync failed for Order: ' + ord.Name);
+        }
+    }
+}
