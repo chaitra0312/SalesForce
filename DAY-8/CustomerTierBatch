@@ -1,0 +1,45 @@
+public class CustomerTierBatch implements Database.Batchable<SObject> {
+
+    public Database.QueryLocator start(Database.BatchableContext context) {
+        return Database.getQueryLocator([
+            SELECT Id, Name, Premium_Customer__c FROM Customer__c
+        ]);
+    }
+
+    public void execute(Database.BatchableContext context, List<Customer__c> scope) {
+        Set<Id> customerIds = new Set<Id>();
+        for (Customer__c c : scope) {
+            customerIds.add(c.Id);
+        }
+
+        AggregateResult[] results = [
+            SELECT Customer__c cust, SUM(Total_Amount__c) total
+            FROM Order__c
+            WHERE Customer__c IN :customerIds
+            GROUP BY Customer__c
+        ];
+
+        Map<Id, Decimal> spendMap = new Map<Id, Decimal>();
+        for (AggregateResult ar : results) {
+            spendMap.put((Id) ar.get('cust'), (Decimal) ar.get('total'));
+        }
+
+        List<Customer__c> toUpdate = new List<Customer__c>();
+        for (Customer__c c : scope) {
+            Decimal spend = spendMap.containsKey(c.Id) ? spendMap.get(c.Id) : 0;
+            Boolean isPremium = spend >= 50000; // adjust threshold as needed
+            if (c.Premium_Customer__c != isPremium) {
+                c.Premium_Customer__c = isPremium;
+                toUpdate.add(c);
+            }
+        }
+
+        if (!toUpdate.isEmpty()) {
+            update toUpdate;
+        }
+    }
+
+    public void finish(Database.BatchableContext context) {
+        System.debug('Premium status recalculation completed.');
+    }
+}
