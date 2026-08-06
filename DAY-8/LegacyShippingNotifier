@@ -1,0 +1,6 @@
+public class LegacyShippingNotifier {
+    @future(callout=true)
+    public static void notifyShippingPartner(Id orderId) {
+        System.debug('Legacy future notifying shipping partner for Order: ' + orderId);
+    }
+}
