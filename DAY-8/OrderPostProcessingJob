@@ -1,0 +1,19 @@
+public class OrderPostProcessingJob implements Queueable {
+    private Id orderId;
+    public OrderPostProcessingJob(Id orderId) {
+        this.orderId = orderId;
+    }
+    public void execute(QueueableContext context) {
+        Order__c ord = [SELECT Id, Name, Customer__c, Total_Amount__c, Status__c
+                         FROM Order__c WHERE Id = :orderId LIMIT 1];
+
+        Shipment__c shp = new Shipment__c(
+            Order__c = ord.Id,
+            Shipment_Status__c = 'Packed',
+            Shipment_Date__c = Date.today()
+        );
+        insert shp;
+        System.debug('Notification prepared for Order: ' + ord.Name);
+        System.debug('Analytics updated. Order total: ' + ord.Total_Amount__c);
+    }
+}
