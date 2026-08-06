@@ -1,0 +1,13 @@
+public class OrderNotificationJob implements Queueable {
+    private Id orderId;
+
+    public OrderNotificationJob(Id orderId) {
+        this.orderId = orderId;
+    }
+
+    public void execute(QueueableContext context) {
+        Order__c ord = [SELECT Id, Name, Customer__r.Email__c 
+                         FROM Order__c WHERE Id = :orderId LIMIT 1];
+        System.debug('Notification sent to ' + ord.Customer__r.Email__c + ' for ' + ord.Name);
+    }
+}
