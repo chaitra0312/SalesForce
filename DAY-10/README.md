@@ -119,7 +119,7 @@ to review highlighted fields), per section 10.12's loading/success/error state d
 
 ---
 
-## Interview Prep Notes 
+## Over View
 
 - **Parent → child:** pass data via `@api` property.
 - **Child → parent:** dispatch a `CustomEvent`; parent listens via `on<eventname>`.
