@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Apply Coupon" icon-name="utility:coupon">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                label="Coupon Code"
+                value={couponCode}
+                onchange={handleCodeChange}>
+            </lightning-input>
+
+            <lightning-button
+                label="Apply"
+                variant="brand"
+                class="slds-m-top_small"
+                onclick={handleApply}
+                disabled={isLoading}>
+            </lightning-button>
+
+            <template if:true={isLoading}>
+                <p class="slds-m-top_small">Checking coupon...</p>
+            </template>
+
+            <template if:true={resultMessage}>
+                <p class="slds-m-top_small">{resultMessage}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>
